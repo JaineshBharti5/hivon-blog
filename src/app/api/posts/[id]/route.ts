@@ -47,7 +47,7 @@ export async function DELETE(_: Request, { params }: { params: Promise<{ id: str
   const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single();
   if (profile?.role !== 'admin') return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
-  const { error } = await supabase.from('posts').delete().eq('id', params.id);
+  const { error } = await supabase.from('posts').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.json({ success: true });
