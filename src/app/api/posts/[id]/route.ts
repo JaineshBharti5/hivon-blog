@@ -2,14 +2,15 @@ import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 // PATCH /api/posts/[id] — Edit post (Author owns it, or Admin)
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single();
-  const { data: post } = await supabase.from('posts').select('author_id').eq('id', params.id).single();
+  const { data: profile } = await supabase.from('users').select('role').eq('id', id).single();
+  const { data: post } = await supabase.from('posts').select('author_id').eq('id', id).single();
 
   if (!post) return NextResponse.json({ error: 'Post not found' }, { status: 404 });
 
@@ -26,7 +27,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   const { data: updated, error } = await supabase
     .from('posts')
     .update({ title, body: postBody, image_url, updated_at: new Date().toISOString() })
-    .eq('id', params.id)
+    .eq('id', id)
     .select()
     .single();
 
