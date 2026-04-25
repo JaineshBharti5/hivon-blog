@@ -4,7 +4,7 @@
 
 A modern blogging platform built with **Next.js 14**, **Supabase**, and **Groq AI** that automatically generates summaries for every post.
 
-🔗 **Live Demo:** `https://hivon-blog.vercel.app` _(replace with your deployed URL)_  
+🔗🔗 **Live Demo:** `https://hivon-blog-oistwqv7q-jaineshbharti5s-projects.vercel.app`_  
 📦 **GitHub:** `https://github.com/yourusername/hivon-blog` _(replace with your repo URL)_
 
 ---
