@@ -36,7 +36,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 }
 
 // DELETE /api/posts/[id] — Admin only
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+// Naya
+export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
